@@ -5,10 +5,14 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
 var ghPages = require('gulp-gh-pages');
+var sass = require('gulp-gh-pages');
+var autoprefixer = require('gulp-autoprefixer');
+var rename = require('gulp-rename');
+
 // The default task is what runs when you type 'gulp' in the
 // terminal. In this case, default depends on 'watch' and 'serve'
 // tasks, so those tasks will run any time we tell 'default' to run.
-gulp.task('default', ['watch', 'serve']);
+gulp.task('default', ['css', 'watch', 'serve']);
 
 // Serve is a name I made up. You could call it 'dostuff' or whatever.
 // The task starts a connect server on port 8000 if you go to
@@ -35,8 +39,20 @@ gulp.task('deploy', function() {
   return gulp.src('./src/**/*').pipe(ghPages());
 });
 // The reload task tells the connect server to reload all browsers
-gulp.task('reload', function () {
+gulp.task('reload', ['css'], function () {
   // This pipe thing is weird but awesome, and we'll talk about it in a
   // sec...
   gulp.src('./src/**/*').pipe(connect.reload());
+});
+
+//CSS task
+gulp.task('css', function () {
+  return gulp.src('./src/css/main.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(rename('main.css'))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .pipe(gulp.dest('./src/css'));
 });
