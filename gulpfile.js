@@ -47,12 +47,12 @@ gulp.task('reload', ['css'], function () {
 
 //CSS task
 gulp.task('css', function () {
-  return gulp.src('./src/css/main.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(rename('main.css'))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
-    .pipe(gulp.dest('./src/css'));
+  // return gulp.src('./src/css/main.scss')
+  //   .pipe(sass().on('error', sass.logError))
+  //   .pipe(rename('main.css'))
+  //   .pipe(autoprefixer({
+  //     browsers: ['last 2 versions'],
+  //     cascade: false
+  //   }))
+  //   .pipe(gulp.dest('./src/css'));
 });
